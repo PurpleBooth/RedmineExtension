@@ -1,0 +1,28 @@
+{
+    "name": "purplebooth/behat-redmine-extension",
+    "description": "Load behat stories from redmine. Update redmine with test results after run.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Billie Alice Thompson",
+            "email": "billie@purplebooth.co.uk"
+        }
+    ],
+    "require": {
+        "behat/behat": "~2.4",
+        "symfony/dependency-injection": "*",
+        "symfony/config": "*",
+        "kbsali/redmine-api" : "*"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "PurpleBooth\\": "src/"
+        }
+    }
+}
