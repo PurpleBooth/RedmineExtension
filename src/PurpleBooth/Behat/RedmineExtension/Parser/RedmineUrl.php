@@ -7,7 +7,7 @@ namespace PurpleBooth\Behat\RedmineExtension\Parser;
  *
  * @package PurpleBooth\Behat\RedmineExtension\Api
  */
-class RedmineUrl extends \Exception
+class RedmineUrl
 {
 
     /**

@@ -21,13 +21,16 @@ $phar = new \Phar($filename, 0, 'extension.phar');
 $phar->setSignatureAlgorithm(\Phar::SHA1);
 $phar->startBuffering();
 
-foreach (findFiles('src') as $path) {
-    $phar->addFromString($path, file_get_contents(__DIR__.'/'.$path));
+foreach (array('src', 'vendor/kbsali/redmine-api') as $includedDirectory) {
+    foreach (findFiles($includedDirectory) as $path) {
+        $phar->addFromString($path, file_get_contents(__DIR__ . '/' . $path));
+    }
 }
 
-$phar->addFromString('init.php', file_get_contents(__DIR__.'/init.php'));
+$phar->addFromString('init.php', file_get_contents(__DIR__ . '/init.php'));
 
-$phar->setStub(<<<STUB
+$phar->setStub(
+    <<<STUB
 <?php
 
 /*
@@ -57,13 +60,15 @@ $phar->stopBuffering();
  */
 function findFiles($dir)
 {
-    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir),
-        RecursiveIteratorIterator::CHILD_FIRST);
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($dir),
+        RecursiveIteratorIterator::CHILD_FIRST
+    );
 
     $files = array();
     foreach ($iterator as $path) {
         if ($path->isFile()) {
-            $files[] = $path->getPath().DIRECTORY_SEPARATOR.$path->getFilename();
+            $files[] = $path->getPath() . DIRECTORY_SEPARATOR . $path->getFilename();
         }
     }
 

@@ -1,2 +1,45 @@
+parameters:
+  purplebooth.behat.redmine.ghirkin.loader.class: \PurpleBooth\Behat\RedmineExtension\Ghirkin\Loader\Redmine
+  purplebooth.behat.redmine.parser.url.class: \PurpleBooth\Behat\RedmineExtension\Parser\RedmineUrl
+  purplebooth.behat.redmine.parser.issue.class: \PurpleBooth\Behat\RedmineExtension\Parser\IssueParser
+  purplebooth.behat.redmine.api.client.class: \PurpleBooth\Behat\RedmineExtension\Api\Client
+  redmine.api.class: \Redmine\Client
+  redmine.url: "https://digitalsupport.homeoffice.gov.uk"
+  redmine.user: "bthompson"
+  redmine.pass: "TV2qg/{]hHP;qf2UBRNZlc|y!"
+
+
 services:
-  # Todo - add services
+  purplebooth.behat.redmine.ghirkin.loader:
+    class: "%purplebooth.behat.redmine.ghirkin.loader.class%"
+    arguments:
+      - "@purplebooth.behat.redmine.api.client"
+      - "@purplebooth.behat.redmine.parser.url"
+      - "@Purplebooth.behat.redmine.parser.issue"
+    tags:
+      -  { name: gherkin.loader }
+
+  purplebooth.behat.redmine.api.client:
+    class: "%purplebooth.behat.redmine.api.client.class%"
+    private: true
+    arguments:
+      - "@redmine.api"
+
+  purplebooth.behat.redmine.parser.url:
+    class: "%purplebooth.behat.redmine.parser.url.class%"
+    private: true
+
+  purplebooth.behat.redmine.parser.issue:
+    class: "%purplebooth.behat.redmine.parser.issue.class%"
+    private: true
+    arguments:
+      - "@gherkin.parser"
+
+
+  redmine.api:
+    class: "%redmine.api.class%"
+    private: true
+    arguments:
+      - "%redmine.url%"
+      - "%redmine.user%"
+      - "%redmine.pass%"
