@@ -21,24 +21,24 @@ services:
 
   purplebooth.behat.redmine.api.client:
     class: "%purplebooth.behat.redmine.api.client.class%"
-    private: true
+    public: false
     arguments:
       - "@redmine.api"
 
   purplebooth.behat.redmine.parser.url:
     class: "%purplebooth.behat.redmine.parser.url.class%"
-    private: true
+    public: false
 
   purplebooth.behat.redmine.parser.issue:
     class: "%purplebooth.behat.redmine.parser.issue.class%"
-    private: true
+    public: false
     arguments:
       - "@gherkin.parser"
 
 
   redmine.api:
     class: "%redmine.api.class%"
-    private: true
+    public: false
     arguments:
       - "%redmine.url%"
       - "%redmine.user%"
